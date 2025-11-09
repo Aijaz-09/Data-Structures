@@ -2,7 +2,7 @@
 #include<stdlib.h>
 struct Array
 {
-  int A[10];
+  int A[50];
   int size;
   int length;
 };
@@ -210,14 +210,14 @@ struct Array* Merge(struct Array *arr1, struct Array *arr2)
     arr3->A[k++] = arr2->A[j]; // j is being incremented in the for loop's increment statement
   arr3->length = arr1->length + arr2->length;
   // Should set the size of array 3 as well like done below
-  arr3->size = 10;
+  arr3->size = arr1->length + arr2->length;
 
   return arr3;
 }
 
 int main()
 {
-  struct Array arr1={{2,6,10,15,25}, 10, 5};
+  struct Array arr1={{2,6,10,15,25,30,40}, 10, 7};
   struct Array arr2={{3,4,7,18,20}, 10, 5};
   struct Array *arr3;
 
