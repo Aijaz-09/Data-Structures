@@ -2,7 +2,7 @@
 #include<stdlib.h>
 struct Array
 {
-  int A[20];
+  int A[10];
   int size;
   int length;
 };
@@ -186,92 +186,44 @@ void RearrageNegPos(struct Array *arr)
   }
 }
 
+//I have implemented Merging in another way in Merging file
+struct Array* Merge(struct Array *arr1, struct Array *arr2)
+{
+  int i,j,k;
+  i=j=k=0;
+  struct Array *arr3=(struct Array *)malloc(sizeof(struct Array));
+  
+  while(i<arr1->length && j<arr2->length)
+  {
+    if(arr1->A[i] < arr2->A[j])
+    {
+      arr3->A[k++] = arr1->A[i++];
+    }
+    else
+    {
+      arr3->A[k++] = arr2->A[j++];
+    }
+  }
+  for(;i<arr1->length;i++)
+    arr3->A[k++] = arr1->A[i];  // i is being incremented in the for loop's increment statement
+  for(;j<arr2->length;j++)
+    arr3->A[k++] = arr2->A[j]; // j is being incremented in the for loop's increment statement
+  arr3->length = arr1->length + arr2->length;
+  // Should set the size of array 3 as well like done below
+  arr3->size = 10;
 
+  return arr3;
+}
 
 int main()
 {
-  struct Array arr = {{2,3,4,5,6}, 20, 5};
-  int status=0, choice=-1, element, index;
-  printf("Initial Array: ");
-  Display(arr);
-  do
-  {
-    printf("\n****************************************************");
-    printf("\nWhat do you want to do: ");
-    printf("\nDisplay array: 1");
-    printf("\nAppend element: 2");
-    printf("\nInsert element: 3");
-    printf("\nDelete at an index: 4");
-    printf("\nGet element: 5");
-    printf("\nSet element: 6");
-    printf("\nGet Max Element:  7");
-    printf("\nGet Min Element: 8");
-    printf("\nGet Sum: 9");
-    printf("\nGet Average: 10");
-    printf("\nExit: 11");
-    printf("\n****************************************************");
-    printf("\nEnter Choice: ");
-    scanf("%d", &choice);
+  struct Array arr1={{2,6,10,15,25}, 10, 5};
+  struct Array arr2={{3,4,7,18,20}, 10, 5};
+  struct Array *arr3;
 
-    switch(choice)
-    {
-      case 1:
-        Display(arr);
-        break;
-      case 2:
-        printf("\nEnter the element you want to append: ");
-        scanf("%d", &element);
-        Append(&arr, element);
-        Display(arr);
-        break;
-      case 3:
-        printf("\nEnter the element, and the index for insertion: ");
-        scanf("%d %d", &element, &index);
-        Insert(&arr, index, element);
-        Display(arr);
-        break;
-      case 4:
-        printf("\nEnter the index of the element you want to delete");
-        scanf("%d", &index);
-        printf("\nDeleted: %d at index %d", Delete(&arr, index), index);
-        Display(arr);
-        break;
-      case 5:
-        printf("\nWhich index's element do you want: ");
-        scanf("%d", &index);
-        printf("\nElement at index %d is %d", index, Get(arr, index));
-        Display(arr);
-        break;
-      case 6:
-        printf("\nEnter the element and the index for Setting: ");
-        scanf("%d %d", &element, &index);
-        Set(&arr, index, element);
-        Display(arr);
-        break;
-      case 7:
-        printf("\nMaximum element: %d", Max(arr));
-        break;
-      case 8:
-        printf("Minumun Element: %d", Min(arr));
-        break;
-      case 9:
-        printf("Sum of elements of array = %d", Sum(arr));
-        break;
-      case 10:
-        printf("Average of elements of array = %f", Avg(arr));
-      case 11:
-        status = 29;
-        break;
-      default:
-        printf("Invalid Choice!\n");
-        Display(arr);
-      }
-  }while(status != 29);
+  arr3 = Merge(&arr1,&arr2);
 
-
-  printf("\nFinal Array = ");
-  Display(arr);
-
+  Display(*arr3);
 
   return 0;
 }
