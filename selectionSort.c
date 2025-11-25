@@ -1,27 +1,38 @@
-#include<stdio.h>
-void selectionSort(int a[], int n) {
-    int temp;
-    for(int j = 0; j < n; j++) {
-        int min = a[j], idx = j;
-        for(int i = j+1; i < n; i++) {
-            if(a[i] < min) {
-                min = a[i];
-                idx = i;
-            }
+#include <stdio.h>
+
+void swap(int *a, int *b)
+{
+    int temp = *a;
+    *a = *b;
+    *b = temp;
+}
+
+void SelectionSort(int a[], int n)
+{
+    int i, j, min;
+    for(i = 0; i < n - 1; i++)
+    {
+        min = i;
+        for(j = i + 1; j < n; j++)
+        {
+            if(a[j] < a[min])
+                min = j;
         }
-        temp = min;
-        a[idx] = a[j];
-        a[j] = temp;
+        // Only swap if a smaller element was found(i.e., if min changes)
+        if(min != i)
+            swap(&a[i], &a[min]);
     }
 }
+
 int main() {
-    int ar[] = {100,5000,200,250,21,50};
-    int size = sizeof(ar)/sizeof(ar[0]);
+    int A[5] = {2, 1, 5, 4, 10};
 
-    selectionSort(ar,size);
+    SelectionSort(A, 5);
 
-    for(int i=0;i<size;i++) {
-        printf("%d ", ar[i]);
+    for(int i = 0; i < 5; i++)
+    {
+        printf("%d ", A[i]);
     }
+
     return 0;
 }
